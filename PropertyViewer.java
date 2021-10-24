@@ -50,7 +50,7 @@ public class PropertyViewer
     public void nextProperty()
     {   
         property_no++;
-        if(property_no == 10) //implements rollover so that user goes first property after the last one.
+        if(property_no == portfolio.numberOfProperties()) //implements rollover so that user goes first property after the last one.
         {
             property_no = 0;
             displayProperty(property_no);
@@ -68,7 +68,7 @@ public class PropertyViewer
         property_no--;
         if(property_no == -1)                       //implements rollover so that user goes on last property after the first one.
         {
-            property_no = 10;
+            property_no = portfolio.numberOfProperties() - 1;
             displayProperty(property_no);
         }
         number_of_properties++;
@@ -122,10 +122,6 @@ public class PropertyViewer
     public void Stats()
     {   
             gui.showStats();
-    }
-    public static void main(String args[])
-    {
-        PropertyViewer pv = new PropertyViewer();
     }
 }
 
