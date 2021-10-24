@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=PropertyViewerGUI
-comment0.text=\r\n\ PropertyViewerGUI\ provides\ the\ GUI\ for\ the\ project.\ It\ displays\ the\ property\r\n\ and\ strings,\ and\ it\ listens\ to\ button\ clicks.\r\n\r\n\ @author\ Michael\ K\u00F6lling,\ David\ J\ Barnes,\ and\ Josh\ Murphy\ \r\n\ @version\ 3.0\r\n
+comment0.text=\r\n\ PropertyViewerGUI\ provides\ the\ GUI\ for\ the\ project.\ It\ displays\ the\ property\r\n\ and\ strings,\ and\ it\ listens\ to\ button\ clicks.\r\n\r\n\ @author\ Michael\ K\u00F6lling,\ David\ J\ Barnes,\ and\ Josh\ Murphy,edited\ by\ Ronen\ Raj\ Roy\ (K21086768)\r\n\ @version\ 3.0\r\n
 comment1.params=viewer
 comment1.target=PropertyViewerGUI(PropertyViewer)
 comment1.text=\r\n\ Create\ a\ PropertyViewer\ and\ display\ its\ GUI\ on\ screen.\r\n

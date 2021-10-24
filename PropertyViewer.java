@@ -9,7 +9,7 @@ import java.net.URISyntaxException;
  * file can be displayed. 
  * 
  * 
- * @author Michael Kölling and Josh Murphy
+ * @author Michael Kölling and Josh Murphy,edited by Ronen Raj Roy (K21086768)
  * @version 1.0
  */
 public class PropertyViewer
@@ -20,6 +20,7 @@ public class PropertyViewer
     private int number_of_properties;   // stores the number of properties viewed by the user.
     private Property current_property;  // stores the property currently being viewed by the user
     private int total_sum;              // stores the sum of the amounts of the properties that the user views.
+    private StatsViewerGUI stats_gui;       
     /**
      * Create a PropertyViewer and display its GUI on screen.
      */
@@ -49,12 +50,7 @@ public class PropertyViewer
      */
     public void nextProperty()
     {   
-        property_no++;
-        if(property_no == portfolio.numberOfProperties()) //implements rollover so that user goes first property after the last one.
-        {
-            property_no = 0;
-            displayProperty(property_no);
-        }
+        property_no = (property_no + 1) % (portfolio.numberOfProperties());
         number_of_properties++;
         displayProperty(property_no);
         total_sum = total_sum + (current_property).getPrice();
@@ -65,12 +61,7 @@ public class PropertyViewer
      */
     public void previousProperty()
     {   
-        property_no--;
-        if(property_no == -1)                       //implements rollover so that user goes on last property after the first one.
-        {
-            property_no = portfolio.numberOfProperties() - 1;
-            displayProperty(property_no);
-        }
+        property_no = (property_no - 1) % (portfolio.numberOfProperties());
         number_of_properties++;
         displayProperty(property_no);
         total_sum = total_sum + (current_property).getPrice();
@@ -121,7 +112,7 @@ public class PropertyViewer
      */
     public void Stats()
     {   
-            gui.showStats();
+            stats_gui.showStats();
     }
 }
 

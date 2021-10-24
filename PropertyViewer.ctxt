@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=PropertyViewer
-comment0.text=\r\n\ This\ project\ implements\ a\ simple\ application.\ Properties\ from\ a\ fixed\r\n\ file\ can\ be\ displayed.\ \r\n\ \r\n\ \r\n\ @author\ Michael\ K\u00F6lling\ and\ Josh\ Murphy\r\n\ @version\ 1.0\r\n
+comment0.text=\r\n\ This\ project\ implements\ a\ simple\ application.\ Properties\ from\ a\ fixed\r\n\ file\ can\ be\ displayed.\ \r\n\ \r\n\ \r\n\ @author\ Michael\ K\u00F6lling\ and\ Josh\ Murphy,edited\ by\ Ronen\ Raj\ Roy\ (K21086768)\r\n\ @version\ 1.0\r\n
 comment1.params=
 comment1.target=PropertyViewer()
 comment1.text=\r\n\ Create\ a\ PropertyViewer\ and\ display\ its\ GUI\ on\ screen.\r\n
