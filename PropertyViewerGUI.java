@@ -23,8 +23,6 @@ public class PropertyViewerGUI
     private JPanel propertyPanel;
     private JLabel idLabel;
     private JLabel favouriteLabel;
-    private JLabel NumOfProp_Label;
-    private JLabel AvgPrice_Label;
     
     private JTextField hostIDLabel;
     private JTextField hostNameLabel;
@@ -37,7 +35,7 @@ public class PropertyViewerGUI
     private Property currentProperty;
     private PropertyViewer viewer;
     private boolean fixedSize;
-    private boolean is_open = false;
+    private StatsViewerGUI stats_gui;
         
     /**
      * Create a PropertyViewer and display its GUI on screen.
@@ -49,6 +47,7 @@ public class PropertyViewerGUI
         fixedSize = false;
         makeFrame();
         this.setPropertyViewSize(400, 250);
+        stats_gui = new StatsViewerGUI(viewer);
     }
 
 
@@ -255,7 +254,4 @@ public class PropertyViewerGUI
         });
         frame.setVisible(true);
     }
-    /**
-     * Function which is used to make a window for showing the statistics and keep updating it as the user views new properties
-     */
 }

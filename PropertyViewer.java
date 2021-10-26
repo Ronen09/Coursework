@@ -30,6 +30,7 @@ public class PropertyViewer
         property_no = 0;            //stores current property number.
         gui = new PropertyViewerGUI(this);
         portfolio = new Portfolio("airbnb-london.csv");
+        stats_gui = new StatsViewerGUI(this);
         displayProperty(property_no);
         total_sum = total_sum + current_property.getPrice();  //stores the price of the first property viewed(we don't want to miss out on that!)
     }
