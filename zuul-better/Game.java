@@ -20,10 +20,11 @@ public class Game
 {
     private Parser parser;
     public Room currentRoom;
-    private HashMap<String,Entity> equipment;
+    public HashMap<String,Entity> equipment;
     public int hp;
     private Entity hillichurl;
     public int combat_power;
+    public Character player;
     Room start, monster_camp1, monster_camp2, monster_camp4, monster_camp3,weapon_room,treasure_room1,treasure_room2,companion_room,misc_room,mini_boss,boss_room;
     /**
      * Create the game and initialise its internal map.
@@ -31,13 +32,14 @@ public class Game
     public Game() 
     {   
         equipment = new HashMap<>();
-        equipment.put("sword",(new Entity(false,this,100,"Sword",true)));
-        equipment.put("armor",(new Entity(false,this,100,"Shield",true)));
-        equipment.put("misc",(new Entity(false,this,0,"Medicine",false)));
+        equipment.put("sword",(new Entity(false,this,100,"Sword",true,null)));
+        equipment.put("armor",(new Entity(false,this,100,"Shield",true,null)));
+        equipment.put("misc",(new Entity(false,this,0,"Medicine",false,null)));
         createRooms();
         hp = 1000;
         combat_power = 200;
         parser = new Parser();
+        player = new Character(true,this,equipment,hp,combat_power,false,"Ronen");
         Room start, monster_camp1, monster_camp2, monster_camp4, monster_camp3,weapon_room,treasure_room1,treasure_room2,companion_room,misc_room,mini_boss,boss_room;
     }
     public void updateCombatPower()
@@ -72,14 +74,18 @@ public class Game
         start.setExit("south",monster_camp1);
 
         weapon_room.setExit("west",start);
-        weapon_room.entities.add(new Entity(false,this,150,"Silver Sword",true));
-        weapon_room.entities.add(new Entity(false,this,200,"Spartan Shield",true));
+        weapon_room.entities.add(new Entity(false,this,150,"Silver Sword",true,null));
+        weapon_room.entities.add(new Entity(false,this,200,"Spartan Shield",true,null));
+        ArrayList<Entity> treasure_items1 = new ArrayList<Entity>();
+        treasure_items1.add((new Entity(false,this,200,"Gold Sword",true,null)));
+        treasure_items1.add((new Entity(false,this,200,"Bronze Shield",true,null)));
+        weapon_room.entities.add((new Entity(true,this,0,"Treasure Chest",false,treasure_items1)));
         
         monster_camp1.setExit("north",start);
         monster_camp1.setExit("west",monster_camp2);
         monster_camp1.setExit("south",companion_room);
-        monster_camp1.entities.add(new Entity(true,this,300,"Hillichurl Pack",true));
-        monster_camp1.entities.add(new Entity(false,this,200,"Treasure Key",false));
+        monster_camp1.characters.add(new Character(true,this,null,2000,200,true,"Hillichurl"));
+        monster_camp1.entities.add(new Entity(false,this,200,"Treasure Key",false,null));
         
         monster_camp2.setExit("south",treasure_room1);
         monster_camp2.setExit("east",monster_camp1);
@@ -156,7 +162,9 @@ public class Game
             printHelp();
         }
         else if (commandWord.equals("go")) {
-            goRoom(command);
+            player.goRoom(command);
+            currentRoom.fight(this);
+            currentRoom.show_items();
         }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
@@ -165,9 +173,16 @@ public class Game
             inventory();
         }
         else if(commandWord.equals("take")){
-            take_item(command);
+            player.take_item(command);
             updateCombatPower();
             showCombatPower();
+        }
+        else if(commandWord.equals("open")){
+            player.open_chest(command);
+            currentRoom.show_items();
+        }
+        else if(commandWord.equals("inspect")){
+            currentRoom.show_items();
         }
         // else command not recognised.
         return wantToQuit;
@@ -193,41 +208,42 @@ public class Game
      * Try to in to one direction. If there is an exit, enter the new
      * room, otherwise print an error message.
      */
-    private void goRoom(Command command) 
-    {
-        if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
-            System.out.println("Go where?");
-            return;
-        }
+    // private void goRoom(Command command) 
+    // {
+        // if(!command.hasSecondWord()) {
+            // // if there is no second word, we don't know where to go...
+            // System.out.println("Go where?");
+            // return;
+        // }
 
-        String direction = command.getSecondWord();
+        // String direction = command.getSecondWord();
 
-        // Try to leave current room.
-        Room nextRoom = currentRoom.getExit(direction);
+        // // Try to leave current room.
+        // Room nextRoom = currentRoom.getExit(direction);
 
-        if (nextRoom == null) {
-            System.out.println("There is no door!");
-        }
-        else {
-            currentRoom = nextRoom;
-            System.out.println(currentRoom.getLongDescription());
-        }
-        if(currentRoom == start)
-        {
-            this.hp = 1000;
-            System.out.println("You have successfully restored your hp!");
-        }
-        if(!currentRoom.entities.isEmpty())
-        {   
-            if(currentRoom.entities.get(0).IS_ENEMY)
-            {
-                currentRoom.entities.get(0).attack();
-                currentRoom.entities.remove(0);
-            }
-            show_items();
-        }
-    }
+        // if (nextRoom == null) {
+            // System.out.println("There is no door!");
+        // }
+        // else {
+            // currentRoom = nextRoom;
+            // currentRoom.fight(this);
+            // System.out.println(currentRoom.getLongDescription());
+        // }
+        // if(currentRoom == start)
+        // {
+            // this.hp = 1000;
+            // System.out.println("You have successfully restored your hp!");
+        // }
+        // if(!currentRoom.entities.isEmpty())
+        // {   
+            // if(currentRoom.entities.get(0).IS_ENEMY)
+            // {
+                // currentRoom.entities.get(0).attack();
+                // currentRoom.entities.remove(0);
+            // }
+            // show_items();
+        // }
+    // }
     private void show_items()
     {
         System.out.println("The room has the following items.");
@@ -238,28 +254,7 @@ public class Game
     }
     private void take_item(Command command)
     {
-        String item = command.getSecondWord() +" "+  command.getThirdWord();
-        for(int i = 0;i<currentRoom.entities.size();i++)
-        {
-            if(currentRoom.entities.get(i).name.equalsIgnoreCase(item))
-            {   
-                if(currentRoom.entities.get(i).isEquipment){
-                    if(currentRoom.entities.get(i).name.contains("Sword"))
-                    {   
-                        equipment.put("sword",currentRoom.entities.get(i));
-                    }
-                    else
-                    {
-                        equipment.put("armor",currentRoom.entities.get(i));
-                    }
-                }
-                else
-                {
-                    equipment.put("misc",currentRoom.entities.get(i));
-                }
-                currentRoom.entities.remove(i);
-            }   
-        }
+        player.take_item(command);
     }
     /** 
      * "Quit" was entered. Check the rest of the command to see

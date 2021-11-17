@@ -22,6 +22,7 @@ public class Room
     private HashMap<String, Room> exits;
     public ArrayList<Entity> entities;// stores exits of this room.
     public ArrayList<Character>characters;
+    private Game game;
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
@@ -33,6 +34,7 @@ public class Room
         this.description = description;
         exits = new HashMap<>();
         entities = new ArrayList<>();
+        characters = new ArrayList<>();
     }
 
     /**
@@ -96,6 +98,18 @@ public class Room
         for(int i = 0;i<this.entities.size();i++)
         {
             System.out.println((i+1) + ". " + this.entities.get(i).name);
+        }
+    }
+    public void fight(Game g)
+    {   
+        int size = this.characters.size();
+        for(int i = 0;i< this.characters.size();i++)
+        {
+            if(characters.get(i).is_enemy)
+            {
+                this.characters.get(i).attack(g.player);
+                this.characters.remove(i);
+            }
         }
     }
 }

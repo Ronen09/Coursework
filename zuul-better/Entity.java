@@ -1,39 +1,39 @@
+import java.util.*;
 
 class Entity
 {   
-    boolean IS_ENEMY;
+    boolean is_chest;
     String name;
-    Room can_go;
     Game game;
     int combat_power;
     boolean isEquipment;
-    Entity(boolean is_enemy,Game G,int combatPower,String name,boolean isEquipment)
+    ArrayList<Entity>items;
+    boolean is_opened;
+    Entity(boolean is_chest,Game G,int combatPower,String name,boolean isEquipment,ArrayList<Entity>items)
     {
-        this.IS_ENEMY = is_enemy;
+        this.is_chest = is_chest;
         this.game = G;
         this.combat_power = combatPower;
         this.name = name;
         this.isEquipment = isEquipment;
+        this.items = items;
+        this.is_opened = false;
     }
     
-
-    public void attack()
+    public void chest()
     {   
-        if(IS_ENEMY)
+        if(!is_opened)
         {
-            System.out.println("You have been attacked by " + this.name + " who has combat power of " + this.combat_power + " ! ");
-            System.out.println("You are succesful in fighting him off!");
-            game.hp = game.hp - this.combat_power;
-            System.out.println("You have " + game.hp + " health remaining");
+            System.out.println("The chest has the following items :");
+            for(int i = 0;i < items.size();i++)
+            {
+                System.out.println((i+1) + ". " + items.get(i).name);
+                game.currentRoom.entities.add(items.get(i));
+            }
         }
-    }
-    public void get_found()
-    {   
-        if(isEquipment)
+        else
         {
-            System.out.println("You have found a new item !");
-            System.out.print("Name : " + this.name + "Combat Power :" + this.combat_power);
-            System.out.print("Do you want to take it?");
+            System.out.println("Chest has already been opened.");
         }
     }
 }

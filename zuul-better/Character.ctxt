@@ -1,11 +1,15 @@
 #BlueJ class context
 comment0.target=Character
-comment1.params=is_player\ game\ equipment\ hp\ combat_power\ room\ is_enemy\ name
-comment1.target=Character(boolean,\ Game,\ java.util.HashMap,\ int,\ int,\ Room,\ boolean,\ java.lang.String)
-comment2.params=atked
-comment2.target=void\ attack(Character)
-comment3.params=command
-comment3.target=void\ goRoom(Command)
+comment1.params=is_player\ game\ equipment\ hp\ combat_power\ is_enemy\ name
+comment1.target=Character(boolean,\ Game,\ java.util.HashMap,\ int,\ int,\ boolean,\ java.lang.String)
+comment2.params=
+comment2.target=void\ initialize_player()
+comment3.params=atked
+comment3.target=void\ attack(Character)
 comment4.params=command
-comment4.target=void\ take_item(Command)
-numComments=5
+comment4.target=void\ goRoom(Command)
+comment5.params=command
+comment5.target=void\ take_item(Command)
+comment6.params=command
+comment6.target=void\ open_chest(Command)
+numComments=7

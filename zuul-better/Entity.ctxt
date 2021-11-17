@@ -1,9 +1,7 @@
 #BlueJ class context
 comment0.target=Entity
-comment1.params=is_enemy\ G\ combatPower\ name\ isEquipment
-comment1.target=Entity(boolean,\ Game,\ int,\ java.lang.String,\ boolean)
+comment1.params=is_chest\ G\ combatPower\ name\ isEquipment\ items
+comment1.target=Entity(boolean,\ Game,\ int,\ java.lang.String,\ boolean,\ java.util.ArrayList)
 comment2.params=
-comment2.target=void\ attack()
-comment3.params=
-comment3.target=void\ get_found()
-numComments=4
+comment2.target=void\ chest()
+numComments=3

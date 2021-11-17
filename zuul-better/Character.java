@@ -4,36 +4,46 @@ class Character
 {
     boolean is_player;
     Game game;
-    private HashMap<String,Entity> equipment;
+    public HashMap<String,Entity> equipment;
     public int hp;
     public int combat_power;
-    Room currentRoom;
-    private boolean is_enemy;
+    public boolean is_enemy;
     private String name;
-    public Character(boolean is_player,Game game,HashMap<String,Entity> equipment,int hp,int combat_power,Room room,boolean is_enemy,String name)
+    public Character(boolean is_player,Game game,HashMap<String,Entity> equipment,int hp,int combat_power,boolean is_enemy,String name)
     {
         this.is_player = is_player;
         this.game = game;
         this.equipment = equipment;
         this.hp = hp;
         this.combat_power = combat_power;
-        this.currentRoom = room;
         this.is_enemy = is_enemy;
         this.name = name;
     }
-    private void attack(Character atked)
+    public void initialize_player()
+    {
+        equipment.put("sword",(new Entity(false,game,100,"Sword",true,null)));
+        equipment.put("armor",(new Entity(false,game,100,"Shield",true,null)));
+        equipment.put("key",(new Entity(false,game,0,"Treasure Key1",false,null)));
+    }
+    public void attack(Character atked)
     {   
         if(atked.is_player)
         {   
             atked.hp -= combat_power;
-        }
-        if(atked.hp <= 0)
-        {
-            System.out.println("You died.");
-            System.exit(0);
+            if(atked.hp <= 0)
+            {
+                System.out.println("You died.");
+                System.exit(0);
+            }
+            else
+            {
+                System.out.println("You were attacked by " + this.name + " .");
+                System.out.println("You were successful in defeating them");
+                System.out.println("You have " + atked.hp + " hp remaining.");
+            }
         }
     }
-    private void goRoom(Command command) 
+    public void goRoom(Command command) 
     {   
         if(is_player)
         {
@@ -46,42 +56,55 @@ class Character
             String direction = command.getSecondWord();
     
             // Try to leave current room.
-            Room nextRoom = currentRoom.getExit(direction);
+            Room nextRoom = game.currentRoom.getExit(direction);
     
             if (nextRoom == null) {
                 System.out.println("There is no door!");
             }
             else {
-                currentRoom = nextRoom;
-                System.out.println(currentRoom.getLongDescription());
+                game.currentRoom = nextRoom;
+                System.out.println(game.currentRoom.getLongDescription());
             }
-            currentRoom.show_items();
+            
         }
     }
-    private void take_item(Command command)
-    {   if(is_player)
+    public void take_item(Command command)
+    {   
+        String item = command.getSecondWord() +" "+  command.getThirdWord();
+        for(int i = 0;i<game.currentRoom.entities.size();i++)
         {
-            String item = command.getSecondWord() +" "+  command.getThirdWord();
-            for(int i = 0;i<currentRoom.entities.size();i++)
-            {
-                if(currentRoom.entities.get(i).name.equalsIgnoreCase(item))
-                {   
-                    if(currentRoom.entities.get(i).isEquipment){
-                        if(currentRoom.entities.get(i).name.contains("Sword"))
-                        {   
-                            equipment.put("sword",currentRoom.entities.get(i));
-                        }
-                        else
-                        {
-                            equipment.put("armor",currentRoom.entities.get(i));
-                        }
+            if(game.currentRoom.entities.get(i).name.equalsIgnoreCase(item))
+            {   
+                if(game.currentRoom.entities.get(i).isEquipment){
+                    if(game.currentRoom.entities.get(i).name.contains("Sword"))
+                    {   
+                        equipment.put("sword",game.currentRoom.entities.get(i));
                     }
                     else
                     {
-                        equipment.put("misc",currentRoom.entities.get(i));
+                        equipment.put("armor",game.currentRoom.entities.get(i));
                     }
-                    currentRoom.entities.remove(i);
-                }   
+                    }
+                else
+                {   
+                    equipment.put(command.getThirdWord(),game.currentRoom.entities.get(i));
+                    equipment.put("misc",game.currentRoom.entities.get(i));
+                }
+                game.currentRoom.entities.remove(i);
+            }   
+        }
+    }
+    public void open_chest(Command command)
+    {
+        String chest = command.getSecondWord() + " " + command.getThirdWord();
+        Entity temp = null;
+        for(int i = 0;i<game.currentRoom.entities.size();i++)
+        {
+            if(game.currentRoom.entities.get(i).is_chest)
+            {   
+                temp = game.currentRoom.entities.get(i);
+                game.currentRoom.entities.remove(i);
+                temp.chest();
             }
         }
     }

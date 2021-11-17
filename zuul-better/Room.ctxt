@@ -21,4 +21,6 @@ comment6.target=Room\ getExit(java.lang.String)
 comment6.text=\r\n\ Return\ the\ room\ that\ is\ reached\ if\ we\ go\ from\ this\ room\ in\ direction\r\n\ "direction".\ If\ there\ is\ no\ room\ in\ that\ direction,\ return\ null.\r\n\ @param\ direction\ The\ exit's\ direction.\r\n\ @return\ The\ room\ in\ the\ given\ direction.\r\n
 comment7.params=
 comment7.target=void\ show_items()
-numComments=8
+comment8.params=g
+comment8.target=void\ fight(Game)
+numComments=9
