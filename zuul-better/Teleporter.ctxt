@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=Teleporter
+comment1.params=game\ room
+comment1.target=Teleporter(Game,\ Room)
+comment2.params=
+comment2.target=void\ teleport()
+comment3.params=
+comment3.target=Room\ teleporter_room()
+numComments=4

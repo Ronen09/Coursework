@@ -18,23 +18,29 @@ import java.util.*;
 
 public class Room 
 {
-    private String description;
+    private String name;
     private HashMap<String, Room> exits;
     public ArrayList<Entity> entities;// stores exits of this room.
     public ArrayList<Character>characters;
     private Game game;
+    private boolean visited;
+    private boolean is_locked;
+    private Entity key;
+    private HashMap<Room,String> room_descriptions;
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description) 
+    public Room(String name) 
     {
-        this.description = description;
+        this.name = name;
         exits = new HashMap<>();
         entities = new ArrayList<>();
         characters = new ArrayList<>();
+        visited = false;
+        room_descriptions = new HashMap<>();
     }
 
     /**
@@ -46,16 +52,37 @@ public class Room
     {
         exits.put(direction, neighbor);
     }
+    public void is_locked(Entity key)
+    {
+        is_locked = true;
+        this.key = key;
+    }
+    public void open_room(Entity key)
+    {
+        if(this.key == key)
+        {
+            is_locked = false;
+            System.out.println("Congratulations! You have unlocked the door.");
+            System.out.println("You can use the go command now!");
+        }
+    }
+    public boolean locked()
+    {
+        return is_locked;
+    }
 
     /**
      * @return The short description of the room
      * (the one that was defined in the constructor).
      */
+    public void setRoomDescription(String str)
+    {
+        room_descriptions.put(this,str);
+    }
     public String getShortDescription()
     {
-        return description;
+        return "You are in" + name + ".\n" + getExitString();
     }
-
     /**
      * Return a description of the room in the form:
      *     You are in the kitchen.
@@ -64,9 +91,8 @@ public class Room
      */
     public String getLongDescription()
     {
-        return "You are " + description + ".\n" + getExitString();
+        return room_descriptions.get(this);
     }
-
     /**
      * Return a string describing the room's exits, for example
      * "Exits: north west".
@@ -100,17 +126,13 @@ public class Room
             System.out.println((i+1) + ". " + this.entities.get(i).name);
         }
     }
-    public void fight(Game g)
-    {   
-        int size = this.characters.size();
-        for(int i = 0;i< this.characters.size();i++)
-        {
-            if(characters.get(i).is_enemy)
-            {
-                this.characters.get(i).attack(g.player);
-                this.characters.remove(i);
-            }
-        }
+    public boolean is_visited()
+    {
+        return visited;
+    }
+    public void has_been_visited(boolean b)
+    {
+        this.visited = true;
     }
 }
 

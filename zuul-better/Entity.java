@@ -9,7 +9,8 @@ class Entity
     boolean isEquipment;
     ArrayList<Entity>items;
     boolean is_opened;
-    Entity(boolean is_chest,Game G,int combatPower,String name,boolean isEquipment,ArrayList<Entity>items)
+    double weight;
+    Entity(boolean is_chest,Game G,int combatPower,String name,boolean isEquipment,ArrayList<Entity>items,double weight)
     {
         this.is_chest = is_chest;
         this.game = G;
@@ -18,22 +19,21 @@ class Entity
         this.isEquipment = isEquipment;
         this.items = items;
         this.is_opened = false;
+        this.weight = weight;
     }
     
-    public void chest()
-    {   
-        if(!is_opened)
-        {
-            System.out.println("The chest has the following items :");
-            for(int i = 0;i < items.size();i++)
-            {
-                System.out.println((i+1) + ". " + items.get(i).name);
-                game.currentRoom.entities.add(items.get(i));
-            }
-        }
-        else
-        {
-            System.out.println("Chest has already been opened.");
-        }
+    public void chest(String take_item)
+    {       
+            take_item = take_item.toLowerCase();
+            game.player.take_item(take_item,this.items);
     }
+    public void show_chest_items()
+    {   
+        int i = 1;
+        System.out.println("The chest has the following items");
+        for(Entity entity:items)
+        {
+            System.out.println(i + ". " + entity.name);
+        }
+   }
 }

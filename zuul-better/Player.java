@@ -1,6 +1,6 @@
 import java.util.*;
 
-class Character
+class Player
 {
     boolean is_player;
     Game game;
@@ -8,30 +8,18 @@ class Character
     public int hp;
     public int combat_power;
     public boolean is_enemy;
-    public int getHp() {
-		return hp;
-	}
-	public void setHp(int hp) {
-		this.hp = hp;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	private String name;
+    private String name;
     private double weight;
     private double maxWeight;
-    public Character(boolean is_player,Game game,ArrayList<Entity> equipment,int hp,int combat_power,boolean is_enemy,String name)
+    public Player(Game game,ArrayList<Entity> equipment,int hp,int combat_power,boolean is_enemy,String name)
     {
-        this.is_player = is_player;
         this.game = game;
         this.equipment = equipment;
         this.hp = hp;
         this.combat_power = combat_power;
         this.is_enemy = is_enemy;
         this.name = name;
+        updateWeight();
     }
     // public void initialize_player()
     // {
@@ -45,16 +33,16 @@ class Character
         int i = 0;
         for(Character chr : game.currentRoom.characters)
         {
-            if(chr.name.equalsIgnoreCase(name))
+            if(chr.getName().equalsIgnoreCase(name))
             {       
                 if(chr.combat_power < this.combat_power)
                 {
                     hp_loss = 2000 - (this.combat_power - chr.combat_power);
-                    System.out.println(chr.name + " has dropped the following items!");
+                    System.out.println(chr.getName() + " has dropped the following items!");
                     for(Entity item:chr.equipment)
                     {   
-                        game.currentRoom.entities.add(chr.equipment.get(i));
-                        System.out.println((i+1) + ". " + chr.equipment.get(i).name);
+                        game.currentRoom.entities.add(item);
+                        System.out.println((i+1) + ". " + item);
                         i++;
                     }
                 }
@@ -83,8 +71,6 @@ class Character
     }
     public void goRoom(Command command) 
     {   
-        if(is_player)
-        {   
             if(!command.hasSecondWord()) {
                 // if there is no second word, we don't know where to go...
                 System.out.println("Go where?");
@@ -109,11 +95,18 @@ class Character
             {
                 System.out.println("The door is locked.Maybe theres a key lying somewhere.");
             }
-        }
     }
     public void goBack()
-    {
-        game.currentRoom = game.previous_room;
+    {   
+        if(game.visited.size() >= 2)
+        {
+            game.currentRoom = game.visited.get(game.visited.size() - 2);
+            game.visited.remove(game.visited.size() - 1);
+        }
+        else
+        {
+            System.out.println("You cannot go back further!");
+        }
     }
     public void take_item(String item,ArrayList<Entity> entities)
     {   
@@ -121,20 +114,40 @@ class Character
         {
             if(entities.get(i).name.equalsIgnoreCase(item))
             {   
-                if(this.weight + entities.get(i).weight > this.getMaxWeight())
-                {
                     if(entities.get(i).isEquipment){
+                    	
                         if(entities.get(i).name.toLowerCase().contains("sword"))
                         {   
-                            equipment.set(0,entities.get(i));
+                        	if(((this.weight + entities.get(i).weight) - this.equipment.get(0).weight) < this.getMaxWeight())
+                        	{
+                        		equipment.set(0,entities.get(i));
+                        	}
+                        	else
+                        	{
+                        		System.out.println(entities.get(i).name +" is too heavy to pick up!");
+                        	}
                         }
                         else if(entities.get(i).name.toLowerCase().contains("shield"))
-                        {
-                            equipment.set(1,entities.get(i));
+                        {	
+                        	if(((this.weight + entities.get(i).weight) - this.equipment.get(1).weight) < this.getMaxWeight())
+                    		{
+                            	equipment.set(1,entities.get(i));
+                    		}
+                        	else
+                        	{
+                        		System.out.println(entities.get(i)+" is too heavy to pick up!");
+                        	}
                         }
                         else
                         {   
-                            equipment.add(entities.get(i));
+                        	if(this.weight + entities.get(i).weight < this.getMaxWeight())
+                        	{
+                        		equipment.add(entities.get(i));
+                        	}
+                        	else
+                        	{
+                        		System.out.println(entities.get(i)+" is too heavy to pick up!");
+                        	}
                         }   
                             entities.remove(i);
                         }
@@ -142,16 +155,10 @@ class Character
                     {   
                         System.out.println("You have to open the chest first before taking its items.");
                     }
-                }
-                else
-                {
-                    System.out.println("You cannot pick up this item as it exceeds your current weight limit.");
-                    break;
                 } 
             }
-        }
         updateWeight();
-    }
+        }
     public void open_chest()
     {
         for(int i = 0;i<game.currentRoom.entities.size();i++)
@@ -176,28 +183,15 @@ class Character
             }
         }
     }
-    public void to_companion()
-    {
-        if(this.equipment.get(0).name.equalsIgnoreCase("medicine"))
-        {
-            System.out.println("Zhongli has got the medicine and is ready to fight by your side.");
-        }
-        this.equipment.set(0,new Entity(false,this.game,1000,"Claw Attack",true,null,0));
-        
-    }
     public void give(String who_gets,Entity entity)
     {
         for(int i = 0;i<game.currentRoom.characters.size();i++)
         {
-            if(game.currentRoom.characters.get(i).name.equalsIgnoreCase(who_gets))
+            if(game.currentRoom.characters.get(i).getName().equalsIgnoreCase(who_gets))
             {   
                 game.currentRoom.characters.get(i).equipment.add(entity);
             }
         }
-    }
-    public boolean is_companion()
-    {
-        return (!this.equipment.isEmpty());
     }
     public void updateWeight()
     {   
