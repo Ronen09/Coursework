@@ -1,19 +1,19 @@
 /**
- * This class is part of the "World of Zuul" application. 
- * "World of Zuul" is a very simple, text based adventure game.
+ * This class is part of the "Insanity" application. 
+ * "Insanity" is a very simple, text based adventure game.
  * 
  * This class holds an enumeration of all command words known to the game.
  * It is used to recognise commands as they are typed in.
  *
- * @author  Michael Kölling and David J. Barnes
- * @version 2016.02.29
+ * @author  Michael Kölling and David J. Barnes and Ronen Raj Roy
+ * @version 2021.12.01
  */
 
 public class CommandWords
 {
     // a constant array that holds all valid command words
     private static final String[] validCommands = {
-        "go", "quit", "help","back","open","inspect","take","inventory","attack","yes","no","give","use","unlock","drop"
+        "go", "quit", "help","back","open","inspect","take","inventory","attack","talk","give","use","unlock","drop"
     };
 
     /**

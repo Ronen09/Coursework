@@ -1,0 +1,9 @@
+\documentclass{article}
+\subparagraph{}
+\title{document}
+\author{Ronen Raj Roy}
+\begin{document}
+\maketitle
+\section{Section}
+Content
+\end{document}

@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=Chest
+comment0.text=\r\n\ SubClass\ created\ to\ implement\ chest\ functionality\r\n\ \r\n\ @author\ Ronen\ Raj\ Roy(K21086768)\r\n\ @version\ 2021-12-01\r\n
+comment1.params=name\ items
+comment1.target=Chest(java.lang.String,\ java.util.ArrayList)
+comment2.params=
+comment2.target=void\ show_chest_items()
+comment2.text=\r\n\ shows\ all\ the\ items\ present\ in\ the\ chest.\r\n
+comment3.params=
+comment3.target=boolean\ is_chest()
+comment3.text=\r\n\ method\ to\ return\ true\ since\ the\ current\ object\ is\ a\ chest.\r\n\ @return\ boolean\ true\r\n
+comment4.params=
+comment4.target=java.util.ArrayList\ getItems()
+comment4.text=\r\n\ accesor\ method\ to\ get\ the\ items\ of\ the\ chest.\r\n\ @return\ ArrayList<Entity>\ items\r\n
+numComments=5

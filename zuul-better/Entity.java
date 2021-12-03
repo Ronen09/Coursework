@@ -1,39 +1,80 @@
 import java.util.*;
-
+/**
+ * Main Class created to implement item functionality
+ * 
+ * @author Ronen Raj Roy(K21086768)
+ * @version 2021-12-01
+ */
 class Entity
 {   
-    boolean is_chest;
-    String name;
-    Game game;
-    int combat_power;
-    boolean isEquipment;
-    ArrayList<Entity>items;
+    private String name;
+    private int combat_power;
+    private boolean isEquipment; 
     boolean is_opened;
-    double weight;
-    Entity(boolean is_chest,Game G,int combatPower,String name,boolean isEquipment,ArrayList<Entity>items,double weight)
+    private double weight;
+    Entity(int combatPower,String name,double weight)
     {
-        this.is_chest = is_chest;
-        this.game = G;
         this.combat_power = combatPower;
         this.name = name;
-        this.isEquipment = isEquipment;
-        this.items = items;
         this.is_opened = false;
         this.weight = weight;
+        this.isEquipment = true;
     }
-    
-    public void chest(String take_item)
-    {       
-            take_item = take_item.toLowerCase();
-            game.player.take_item(take_item,this.items);
+    /**
+     * accesor method to get the name of the item
+     * @return String name
+     */
+    public String getName() {
+        return name;
     }
-    public void show_chest_items()
-    {   
-        int i = 1;
-        System.out.println("The chest has the following items");
-        for(Entity entity:items)
-        {
-            System.out.println(i + ". " + entity.name);
-        }
+    /**
+    * setter method the set the name of the item
+    * @param String  name
+    */
+    public void setName(String name) {
+        this.name = name;
+    }
+    /**
+    * accesor method to get the combat power of the item.
+    * @return
+    */
+    public int getCombat_power() {
+        return combat_power;
+    }
+    /**
+     * setter method to set the combat power of the item.
+     * @param int combat_power
+     */
+    public void setCombat_power(int combat_power) {
+        this.combat_power = combat_power;
+    }
+    /**
+     * accesor method to get the weight of the item
+     * @return double weight
+     */
+    public double getWeight()
+    {
+        return weight;
+    }
+   /**
+    * accesor method to get if the item is equipment or not.
+    * @return boolean isEquipment
+    */
+   public boolean is_equipment()
+   {
+       return this.isEquipment;
    }
+   public boolean is_chest()
+   {
+       return false;
+   }
+   public void show_chest_items()
+   {
+       System.out.println(name + " is not a chest.");
+   }
+   public ArrayList<Entity> getItems()
+   {
+       return null;
+   }
+   
 }

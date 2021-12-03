@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.target=WorldGen
+comment0.text=\r\n\ Class\ used\ to\ create\ and\ initialize\ the\ rooms\ along\ with\ the\ items\ in\ them\r\n\ @author\ Ronen\ Raj\ Roy(K21086768)\r\n\ @version\ 2021.12.01\r\n
+comment1.params=
+comment1.target=WorldGen()
+comment2.params=
+comment2.target=void\ createRooms()
+comment2.text=\r\n\ creates\ all\ the\ rooms\ in\ the\ game\ as\ well\ as\ setting\ the\ exits.\r\n
+comment3.params=
+comment3.target=void\ addItems()
+comment3.text=\r\n\ Adds\ all\ the\ items\ to\ the\ various\ rooms.\r\n
+numComments=4

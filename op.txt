@@ -1,0 +1,116 @@
+game1.play();
+
+Welcome to the World of Zuul!
+World of Zuul is a new, incredibly boring adventure game.
+Type 'help' if you need help.
+
+You have entered the castle of the ruined king.
+> go east
+You enter the armory,containing the equipment of many adventurers who tried to brave the horrors of the castle, only to succumb to them.
+You are in the weapon room..
+Exits: west
+> take sapphire sword from chest
+Obtained: Sapphire Sword
+> back
+You are in start location..
+Exits: east south west
+> go south
+As you move through the castle you encounter some thralls lying dormant.
+However they are suspectible to noise and your heavy armor makes its impossible to move past them stealthily.
+You are in the castle quarters..
+Exits: south north west
+> attack thralls
+Thralls has dropped the following items!
+1. Mysterious SpellBook
+> take mysterious spellbook
+Obtained: Mysterious SpellBook
+> go south
+As you move through the castle a ghostly apparition comes up to you.
+He says,"Hello traveler,I am delighted to see you.Just like you, I dared to explore this castle many years ago,but I wasn't strong enough."
+"However I did manage to obtain one of the forbidden keys.If you help me in finding my spellbook,I am willing to give it to you."
+You continue on,fueled by the motivation to bring back your precious queen.....
+You are in .
+Exits: south north
+> give mysterious spellbook ghost
+Thanks for giving me my long lost spellbook.As I said earlier I will provide you with the 2nd Forbidden Key
+> take pantheon's shield
+Obtained: Pantheon's Shield
+> go south
+As you move through the castle a ghostly apparition comes up to you.
+He says,"Hello traveler,I am delighted to see you.Just like you, I dared to explore this castle many years ago,but I wasn't strong enough."
+"However I did manage to obtain one of the forbidden keys.If you help me in finding my spellbook,I am willing to give it to you."
+You enter the room.
+ Thresh(The warden of death) is there.
+ It almost looks like he was waiting for you.
+"What brings you here,wandering soul?",he says 
+You say to him,with absolute confidence,"I want to take the Blade Of The Ruined King and bring back my dead queen"Thresh laughs at you,mockingly "Only if you get through me.. "
+You are in Thresh's room..
+Exits: south north west
+> attack thresh
+Thresh has dropped the following items!
+1. Thresh's Shield
+> take thresh's shield
+Obtained: Thresh's Shield
+> go south
+You have finally got all the 3 keys to unlock the locks to the door which lead to the Blade./n You feel happy,hoping to be finally reunited by the woman you loved all your life.
+You are in the dining halls..
+Exits: south north
+> take gold key
+Obtained: Gold Key
+> back
+You are in Thresh's room..
+Exits: south north west
+> go west
+The door is locked.Maybe theres a key lying somewhere.
+As you move through the castle a ghostly apparition comes up to you.
+He says,"Hello traveler,I am delighted to see you.Just like you, I dared to explore this castle many years ago,but I wasn't strong enough."
+"However I did manage to obtain one of the forbidden keys.If you help me in finding my spellbook,I am willing to give it to you."
+You are in Thresh's room..
+Exits: south north west
+> unlock west
+Congratulations! You have unlocked the door.
+You can use the go command now!
+> go west
+You enter another room,where you see a huge mob of thralls.
+You are in the second treasure room..
+Exits: east
+> take diamond sword from chest
+Obtained: Diamond Sword
+> take forbidden key_1 from chest
+Obtained: Forbidden Key_1
+> back
+You are in Thresh's room..
+Exits: south north west
+> go south
+You are in the dining halls..
+Exits: south north
+> go south
+You can sense that you are close to the legendary Blade.
+ But,as you venture into a huge hall,you are interrupted by loud growling noises.
+A big dragon,black and green,flies down and lands in front of your destination 
+Its Azdaha,the dragon of Ruined King who fashioned it with the immense power of the blade.
+You shudder at the mere sightBut nothing..nothing would deter you from your goal.
+You are in11.
+Exits: south north
+> attack azdaha
+Azdaha has dropped the following items!
+1. Forbidden Key_3
+> take forbidden key_3
+Obtained: Forbidden Key_3
+> unlock south
+You unlocked the door leading to the throne room...
+You can use the go command now!
+> go south
+Finally you enter the room where you can see the Blade floating in its case.You speak the incatantion to remove the barriers and it goes down./n Finally the legendary Blade Of The Ruined King lies there,waiting for you to take it.
+You are in the throne room..
+Exits: north
+> take legendary_sword_of the_ruined_king
+Obtained: Legendary_Sword_of The_Ruined_King
+
+You take the sword and feel its enormous power engulf you.Slowly your mortal skin burns and turns pale.
+You are not Garen anymore.You are reborn as the next King of Death.But when you meet your queen again,she was sad to see you.
+"Why couldn't you just let me rest?" she said.She vanishes,nowhere to see again.Hearing her harsh words was like blade going through your heart.
+You cry your heart out,but after a while you just feel empty.Anger and vengenance replace the sadness.You say to yourself,
+"If I cannot get my happiness, no one can..." laughing maniaclly as you raise thousands of thralls to conquer the whole of Earth.
+
+Thanks,for playing the game,hope you had fun!

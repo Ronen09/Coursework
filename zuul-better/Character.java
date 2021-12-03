@@ -1,222 +1,142 @@
 import java.util.*;
-
+/**
+ * Class to implement getCharacters() along with their functionalities
+ * 
+ * @author Ronen Raj Roy(K21086768)
+ * @version 2021-12-01
+ */
 class Character
 {
     boolean is_player;
     Game game;
-    public ArrayList<Entity> equipment;
-    public int hp;
-    public int combat_power;
-    public boolean is_enemy;
-    public int getHp() {
-		return hp;
-	}
-	public void setHp(int hp) {
-		this.hp = hp;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	private String name;
-    private double weight;
-    private double maxWeight;
-    public Character(boolean is_player,Game game,ArrayList<Entity> equipment,int hp,int combat_power,boolean is_enemy,String name)
+    private ArrayList<Entity> equipment;
+    private int hp;
+    private int combat_power;
+    private String dialogue;
+    private String name;
+    private Room currentRoom;
+    private boolean is_enemy;
+    private boolean gave;
+    public Character(Game game, ArrayList<Entity> equipment, int hp, int combat_power, boolean is_enemy, String name)
     {
-        this.is_player = is_player;
         this.game = game;
         this.equipment = equipment;
         this.hp = hp;
         this.combat_power = combat_power;
-        this.is_enemy = is_enemy;
         this.name = name;
+        this.is_enemy = is_enemy;
     }
-    // public void initialize_player()
-    // {
-        // equipment.put("sword",(new Entity(false,game,100,"Sword",true,null)));
-        // equipment.put("armor",(new Entity(false,game,100,"Shield",true,null)));
-        // equipment.put("key",(new Entity(false,game,0,"Treasure Key1",false,null)));
-    // }
-    public void attack(String name)
+    /**
+     * accesor method to get if the current character is an enemy.
+     * @return boolean is_enemy
+     */
+    public boolean isEnemy()
+    {
+        return this.is_enemy;
+    }
+    /**
+     * accesor method to know if the character has already given his item.
+     * @return boolean gave
+     */
+    public boolean given()
     {   
-        int hp_loss = 0;
-        int i = 0;
-        for(Character chr : game.currentRoom.characters)
-        {
-            if(chr.name.equalsIgnoreCase(name))
-            {       
-                if(chr.combat_power < this.combat_power)
-                {
-                    hp_loss = 2000 - (this.combat_power - chr.combat_power);
-                    System.out.println(chr.name + " has dropped the following items!");
-                    for(Entity item:chr.equipment)
-                    {   
-                        game.currentRoom.entities.add(chr.equipment.get(i));
-                        System.out.println((i+1) + ". " + chr.equipment.get(i).name);
-                        i++;
-                    }
-                }
-                else
-                {
-                    System.out.println("You were defeated!");
-                }
-            }
-        }
-        this.hp -= hp_loss;
+        System.out.println("I have already given you what I possess,traveller.");
+        return this.gave;
     }
-    public void unlockRoom(String direction)
+    /**
+     * accesor to get the name of the character
+     * @return String name
+     */
+    public String getName() {
+        return name;
+    }
+    /**
+     * setter method to set the currentRoom of the character
+     * @param Room currentRoom
+     */
+    public void setCurrentRoom(Room currentRoom) {
+        this.currentRoom = currentRoom;
+        this.currentRoom.getCharacters().add(this);
+    }
+    /**
+     * accesor method to get the combat power of the character.
+     * @return int combat_power
+     */
+    public int getCombat_power() {
+        return combat_power;
+    }
+    /**
+     * function which moves the character in a random direction with some probablity.
+     */
+    public void move()
     {
-        Room nextRoom = game.currentRoom.getExit(direction);
-        if(nextRoom.locked())
+        Random rand = new Random();
+        Room nextRoom;
+        String directions[] = {"north","south","west","east"};
+        if(Math.random() > 0.8)
         {
-            for(Entity ent:this.equipment)
-            {
-                if(ent.name.contains("key"))
+            nextRoom = currentRoom.getExit(directions[rand.nextInt(4)]);
+            if(nextRoom != null)
+            {   
+                if(!nextRoom.locked())
                 {
-                        nextRoom.open_room(ent);
-                        break;
+                    currentRoom.getCharacters().remove(this);
+                    currentRoom = nextRoom;
+                    currentRoom.getCharacters().add(this);
                 }
             }
         }
+        check();
     }
-    public void goRoom(Command command) 
+    /**
+     * setter method to set the dialogue of the character.
+     * @param String dialogue
+     */
+    public void setDialogue(String dialogue)
+    {
+        this.dialogue = dialogue;
+    }
+    /**
+     * accesor method to get the dialogue of the character.
+     * @return String dialogue
+     */
+    public String getDialogue()
+    {
+        return dialogue;
+    }
+    /**
+     * function which is used to print a statement letting the player know that the character is in the same room as the player.
+     */
+    public void meet()
+    {
+        System.out.println("You see " + this.getName()+ " wandering in the castle.");
+    }
+    /**
+     * function used to check if the character is in the same room as the player.
+     */
+    private void check()
+    {
+        if(game.getCurrentRoom() == this.currentRoom)
+        {
+            meet();
+        }
+    }
+    /**
+     * function used to make the character give the certain item to the player provided the player gives it the required item.
+     */
+    public void give_key()
     {   
-        if(is_player)
-        {   
-            if(!command.hasSecondWord()) {
-                // if there is no second word, we don't know where to go...
-                System.out.println("Go where?");
-                return;
-            }
-        
-
-            String direction = command.getSecondWord();
-            
-            // Try to leave current room.
-            Room nextRoom = game.currentRoom.getExit(direction);
-            if(!nextRoom.locked())
-            {
-                if (nextRoom == null) {
-                System.out.println("There is no door!");
-                }
-                else {
-                    game.currentRoom = nextRoom;
-                }
-            }
-            else
-            {
-                System.out.println("The door is locked.Maybe theres a key lying somewhere.");
-            }
-        }
+        game.player.getEquipment().add(this.equipment.get(0));
+        System.out.println("Thanks for finding my spellbook.Now as per my promise,here is the 2nd Forbidden Key.");
+        System.out.println("Obtained: " + this.equipment.get(0).getName());
+        gave = true;
     }
-    public void goBack()
+    /**
+     * accesor method to get the getCharacters() equipment.
+     * @return ArrayList<Entity> equipment
+     */
+    public ArrayList<Entity> getEquipment()
     {
-        game.currentRoom = game.previous_room;
-    }
-    public void take_item(String item,ArrayList<Entity> entities)
-    {   
-        for(int i = 0;i<entities.size();i++)
-        {
-            if(entities.get(i).name.equalsIgnoreCase(item))
-            {   
-                if(this.weight + entities.get(i).weight > this.getMaxWeight())
-                {
-                    if(entities.get(i).isEquipment){
-                        if(entities.get(i).name.toLowerCase().contains("sword"))
-                        {   
-                            equipment.set(0,entities.get(i));
-                        }
-                        else if(entities.get(i).name.toLowerCase().contains("shield"))
-                        {
-                            equipment.set(1,entities.get(i));
-                        }
-                        else
-                        {   
-                            equipment.add(entities.get(i));
-                        }   
-                            entities.remove(i);
-                        }
-                    else
-                    {   
-                        System.out.println("You have to open the chest first before taking its items.");
-                    }
-                }
-                else
-                {
-                    System.out.println("You cannot pick up this item as it exceeds your current weight limit.");
-                    break;
-                } 
-            }
-        }
-        updateWeight();
-    }
-    public void open_chest()
-    {
-        for(int i = 0;i<game.currentRoom.entities.size();i++)
-        {
-            if(game.currentRoom.entities.get(i).is_chest)
-            {   
-                game.currentRoom.entities.get(i).show_chest_items();
-            }
-        }
-    }
-    public void take_item_from_chest(Command command)
-    {    
-        String take_item = (command.getSecondWord() + " " + command.getThirdWord()).toLowerCase();
-        Entity temp = null;
-        String chest = command.getFifthWord();
-        for(int i = 0;i<game.currentRoom.entities.size();i++)
-        {
-            if(game.currentRoom.entities.get(i).is_chest)
-            {   
-                temp = game.currentRoom.entities.get(i);
-                temp.chest(take_item);
-            }
-        }
-    }
-    public void to_companion()
-    {
-        if(this.equipment.get(0).name.equalsIgnoreCase("medicine"))
-        {
-            System.out.println("Zhongli has got the medicine and is ready to fight by your side.");
-        }
-        this.equipment.set(0,new Entity(false,this.game,1000,"Claw Attack",true,null,0));
-        
-    }
-    public void give(String who_gets,Entity entity)
-    {
-        for(int i = 0;i<game.currentRoom.characters.size();i++)
-        {
-            if(game.currentRoom.characters.get(i).name.equalsIgnoreCase(who_gets))
-            {   
-                game.currentRoom.characters.get(i).equipment.add(entity);
-            }
-        }
-    }
-    public boolean is_companion()
-    {
-        return (!this.equipment.isEmpty());
-    }
-    public void updateWeight()
-    {   
-        weight = 0;
-        for(Entity ent:this.equipment)
-        {
-            weight += ent.weight;
-        }
-    }
-    public void showWeight()
-    {
-        System.out.println("You are carrying " + weight + " kgs of items.");
-    }
-    public void setMaxWeight(double w)
-    {
-        maxWeight = w;
-    }
-    public double getMaxWeight()
-    {
-        return maxWeight;
+        return this.equipment;
     }
 }

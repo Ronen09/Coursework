@@ -1,9 +1,12 @@
 #BlueJ class context
 comment0.target=Teleporter
+comment0.text=\r\n\ This\ class\ is\ used\ to\ implement\ the\ teleport\ functionality\ in\ the\ game.\r\n\ @author\ Ronen\ Raj\ Roy\ (K21086768)\r\n\ @version\ 2021.12.01\r\n
 comment1.params=game\ room
 comment1.target=Teleporter(Game,\ Room)
 comment2.params=
 comment2.target=void\ teleport()
+comment2.text=\r\n\ teleports\ the\ current\ player\ to\ a\ random\ room\ which\ the\ player\ has\ already\ visited.\r\n
 comment3.params=
 comment3.target=Room\ teleporter_room()
+comment3.text=\r\n\ accesor\ method\ to\ get\ the\ room\ in\ which\ the\ teleporter\ is\ present.\r\n\ @return\ Room\ room\r\n
 numComments=4
