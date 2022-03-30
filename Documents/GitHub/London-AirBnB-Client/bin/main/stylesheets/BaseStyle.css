@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+AnchorPane BorderPane
+{
+    -fx-background-color: #9394a5;
+    -fx-font-family: 'Montserrat', sans-serif;
+}
+
+VBox
+{
+    -fx-background-color: #d2d3db;
+}
+
+.date-picker
+{
+    -fx-background-color: #e4e5f1;
+}
+
+.combo-box
+{
+    -fx-background-color: #e4e5f1;
+}

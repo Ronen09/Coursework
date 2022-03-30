@@ -1,0 +1,22 @@
+AnchorPane BorderPane
+{
+    -fx-background-color: #9394a5;
+}
+VBox
+{
+    -fx-background-color: #d2d3db;
+}
+.red-button
+{
+    -fx-background-color: #fa675c;
+}
+
+.date-picker
+{
+    -fx-background-color: #e4e5f1;
+}
+
+.combo-box
+{
+    -fx-background-color: #e4e5f1;
+}
