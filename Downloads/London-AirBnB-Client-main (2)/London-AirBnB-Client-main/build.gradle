@@ -1,0 +1,50 @@
+plugins {
+  id 'java'
+  id 'application'
+  id 'org.openjfx.javafxplugin' version '0.0.10'
+    id "com.williambl.bluej_jar.bluej-jar" version "0.1"
+}
+blueJJar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+repositories {
+    mavenCentral()
+}
+
+javafx {
+    version = "11"
+    modules = [ 'javafx.controls' , 'javafx.fxml' ]
+}
+
+dependencies{
+  implementation 'com.opencsv:opencsv:4.1'
+}
+
+ext {
+    junitVersion = '5.7.1'
+}
+
+java.targetCompatibility = JavaVersion.VERSION_11
+java.sourceCompatibility = JavaVersion.VERSION_11
+
+compileJava {
+    options.release = 11
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+
+    implementation 'org.junit.jupiter:junit-jupiter:5.7.0'
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+}
+
+test {
+    useJUnitPlatform()
+}
+
+mainClassName = 'HelloFX'
